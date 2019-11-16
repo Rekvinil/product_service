@@ -13,8 +13,6 @@ public class Product {
     private float price;
     private String discount;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductCharacteristic> productCharacteristics;
 
     public Product() {
     }
@@ -57,11 +55,4 @@ public class Product {
         this.discount = discount;
     }
 
-    public List<ProductCharacteristic> getProductCharacteristics() {
-        return productCharacteristics;
-    }
-
-    public void setProductCharacteristics(List<ProductCharacteristic> productCharacteristics) {
-        this.productCharacteristics = productCharacteristics;
-    }
 }

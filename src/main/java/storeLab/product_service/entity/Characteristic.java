@@ -12,8 +12,6 @@ public class Characteristic {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "characteristic", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductCharacteristic> productCharacteristics;
 
     public Characteristic() {
     }
@@ -45,13 +43,5 @@ public class Characteristic {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<ProductCharacteristic> getProductCharacteristics() {
-        return productCharacteristics;
-    }
-
-    public void setProductCharacteristics(List<ProductCharacteristic> productCharacteristics) {
-        this.productCharacteristics = productCharacteristics;
     }
 }
