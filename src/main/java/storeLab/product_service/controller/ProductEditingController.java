@@ -11,11 +11,11 @@ import storeLab.product_service.service.ProductEditingService;
 import java.util.List;
 
 @Controller
-public class MainController {
+public class ProductEditingController {
 
     private final ProductEditingService productEditingService;
 
-    public MainController(ProductEditingService productEditingService) {
+    public ProductEditingController(ProductEditingService productEditingService) {
         this.productEditingService = productEditingService;
     }
 
@@ -25,10 +25,10 @@ public class MainController {
         List<Product> products;
         products = productEditingService.getAllProducts();
         model.addAttribute("products", products);
-        return "add";
+        return "addProduct";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addProduct")
     public String addProduct(@RequestParam String name, @RequestParam String price,
                              @RequestParam String discount, Model model){
         float pricef = Float.parseFloat(price);
@@ -36,6 +36,6 @@ public class MainController {
         List<Product> products;
         products = productEditingService.getAllProducts();
         model.addAttribute("products", products);
-        return "add";
+        return "addProduct";
     }
 }
