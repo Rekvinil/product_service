@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProductCharacteristicRepository extends JpaRepository<ProductCharacteristic, Integer> {
     List<ProductCharacteristic> findByProduct(Product product);
     ProductCharacteristic findByProductAndCharacteristics(Product product, Characteristic characteristic);
+    void deleteByProduct(Product product);
 }

@@ -1,7 +1,6 @@
 package storeLab.product_service.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Product {
@@ -12,15 +11,25 @@ public class Product {
     private String name;
     private float price;
     private String discount;
+    private String img;
 
 
     public Product() {
     }
 
-    public Product(String name, float price, String discount) {
+    public Product(String name, float price, String discount, String img) {
         this.name = name;
         this.price = price;
         this.discount = discount;
+        this.img = img;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public Integer getId() {

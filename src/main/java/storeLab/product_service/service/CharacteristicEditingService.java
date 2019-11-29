@@ -26,6 +26,25 @@ public class CharacteristicEditingService {
         return characteristicRepository.findAll();
     }
 
+    public Characteristic getCharacteristicByName(String name){
+        return characteristicRepository.getCharacteristicByName(name);
+    }
 
+    public Characteristic getCharacteristic(Integer id){
+        return characteristicRepository.findById(id).orElse(null);
+    }
+
+    public void changeCharacteristic(Integer id, String name, String description){
+        Characteristic c = characteristicRepository.findById(id).orElse(null);
+        if(c!=null){
+            c.setName(name);
+            c.setDescription(description);
+            characteristicRepository.save(c);
+        }
+    }
+
+    public void deleteCharacteristic(Integer id){
+        characteristicRepository.deleteById(id);
+    }
 
 }

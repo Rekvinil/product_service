@@ -17,26 +17,22 @@ public class ProductEditingService {
 
     private final ProductCharacteristicRepository productCharacteristicRepository;
 
-    private final CharacteristicRepository characteristicRepository;
-
 
     public ProductEditingService(ProductRepository productRepository, ProductCharacteristicRepository productCharacteristicRepository, CharacteristicRepository characteristicRepository) {
         this.productRepository = productRepository;
         this.productCharacteristicRepository = productCharacteristicRepository;
-        this.characteristicRepository = characteristicRepository;
     }
 
     public List<Product> getAllProducts(){
         return productRepository.findAll();
     }
 
-    public List<Characteristic> getCharacteristicOfProduct(Product product){
-        List<ProductCharacteristic> pc = productCharacteristicRepository.findByProduct(product);
-        List<Characteristic> lst = new ArrayList<>();
-        for(ProductCharacteristic p : pc){
-            lst.add(p.getCharacteristics());
-        }
-        return lst;
+    public Product getProductById(Integer id){
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public List<ProductCharacteristic> getCharacteristicsOfProduct(Product product){
+        return productCharacteristicRepository.findByProduct(product);
     }
 
     public String getValueOfCharacteristic(Product product, Characteristic characteristic){
@@ -47,7 +43,31 @@ public class ProductEditingService {
         productCharacteristicRepository.save(new ProductCharacteristic(pr,ch,value));
     }
 
-    public void addProduct(String name, float price, String discount){
-        productRepository.save(new Product(name,price,discount));
+    public void addProduct(String name, float price, String discount, String img){
+        productRepository.save(new Product(name, price, discount, img));
     }
+
+    public void changeProduct(Integer id, String name, float price, String discount, String img){
+        Product p = productRepository.findById(id).orElse(null);
+        if(p==null){
+            return;
+        }
+        p.setName(name);
+        p.setPrice(price);
+        p.setDiscount(discount);
+        p.setImg(img);
+        productRepository.save(p);
+    }
+
+    public void changeCharacteristicOfProduct(Product product, Characteristic characteristic, String value){
+        ProductCharacteristic pc = productCharacteristicRepository.findByProductAndCharacteristics(product, characteristic);
+        pc.setValue(value);
+        productCharacteristicRepository.save(pc);
+    }
+
+    public void deleteProduct(Product product){
+        productRepository.deleteById(product.getId());
+        productCharacteristicRepository.deleteByProduct(product);
+    }
+
 }

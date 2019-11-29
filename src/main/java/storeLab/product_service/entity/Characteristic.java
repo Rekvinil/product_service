@@ -1,7 +1,6 @@
 package storeLab.product_service.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Characteristic {

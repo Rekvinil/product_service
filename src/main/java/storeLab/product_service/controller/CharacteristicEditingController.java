@@ -1,17 +1,13 @@
 package storeLab.product_service.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import storeLab.product_service.entity.Characteristic;
 import storeLab.product_service.service.CharacteristicEditingService;
 
 import java.util.List;
 
-@Controller
-
+@RequestMapping("/characteristicsEditing")
+@RestController
 public class CharacteristicEditingController {
     private final CharacteristicEditingService charEditServ;
 
@@ -19,19 +15,32 @@ public class CharacteristicEditingController {
         this.charEditServ = charEditServ;
     }
 
-    @GetMapping("/addCharacteristic")
-    public String getCharacteristics(Model model){
-        List<Characteristic> characteristics = charEditServ.getCharacterisitics();
-        model.addAttribute("characteristics", characteristics);
-        return "addCharacteristic";
+    @GetMapping("/getCharacteristics")
+    public @ResponseBody List<Characteristic> getCharacteristics(){
+        return charEditServ.getCharacterisitics();
     }
 
     @PostMapping("/addCharacteristic")
-    public String addCharacteristic(@RequestParam String name, @RequestParam String description,
-                                    Model model){
+    public void addCharacteristic(@RequestParam String name, @RequestParam String description){
         charEditServ.addCharacteristic(name,description);
-        List<Characteristic> characteristics = charEditServ.getCharacterisitics();
-        model.addAttribute("characteristics", characteristics);
-        return "addCharacteristic";
     }
+
+    @GetMapping("/getCharacteristics/{characteristic}")
+    public Characteristic getCharacteristic(@PathVariable Characteristic characteristic){
+        return characteristic;
+    }
+
+    @PutMapping("/characteristicEdit/{characteristic}")
+    public void changeCharacteristic(@RequestParam String name,
+                                       @RequestParam String description,
+                                       @PathVariable Characteristic characteristic){
+        charEditServ.changeCharacteristic(characteristic.getId(),name,description);
+    }
+
+    @DeleteMapping("/deleteCharacteristic/{characteristic}")
+    public void deleteCharacteristic(@PathVariable Characteristic characteristic){
+        charEditServ.deleteCharacteristic(characteristic.getId());
+    }
+
+
 }

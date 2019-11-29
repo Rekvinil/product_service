@@ -1,16 +1,15 @@
 package storeLab.product_service.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import storeLab.product_service.entity.Characteristic;
 import storeLab.product_service.entity.Product;
+import storeLab.product_service.entity.ProductCharacteristic;
 import storeLab.product_service.service.ProductEditingService;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/productEditing")
 public class ProductEditingController {
 
     private final ProductEditingService productEditingService;
@@ -19,23 +18,48 @@ public class ProductEditingController {
         this.productEditingService = productEditingService;
     }
 
+    @GetMapping("/getProducts")
+    public List<Product> getProducts(){
+        return productEditingService.getAllProducts();
+    }
 
-    @GetMapping("/")
-    public String main(Model model){
-        List<Product> products;
-        products = productEditingService.getAllProducts();
-        model.addAttribute("products", products);
-        return "addProduct";
+    @GetMapping("/{product}")
+    public Product getProductById(@PathVariable Product product){
+        return productEditingService.getProductById(product.getId());
+    }
+
+    @GetMapping("/getCharacteristicsOfProduct/{product}")
+    public List<ProductCharacteristic> getCharacteristicsOfProduct(@PathVariable Product product){
+        return productEditingService.getCharacteristicsOfProduct(product);
     }
 
     @PostMapping("/addProduct")
-    public String addProduct(@RequestParam String name, @RequestParam String price,
-                             @RequestParam String discount, Model model){
-        float pricef = Float.parseFloat(price);
-        productEditingService.addProduct(name,pricef,discount);
-        List<Product> products;
-        products = productEditingService.getAllProducts();
-        model.addAttribute("products", products);
-        return "addProduct";
+    public void addProduct(@RequestBody Product product){
+        productEditingService.addProduct(product.getName(), product.getPrice(), product.getDiscount(), product.getImg());
+    }
+
+    @PostMapping("/addProduct/{characteristic}")
+    public void addCharacteristic(@RequestParam String value,
+                                  @PathVariable Characteristic characteristic,
+                                  @RequestParam Product product){
+        productEditingService.addCharacteristic(product, characteristic, value);
+    }
+
+    @PostMapping("/changeProduct")
+    public void changeProduct(@RequestBody Product product){
+        productEditingService.changeProduct(product.getId(), product.getName(), product.getPrice(), product.getDiscount(),
+                product.getImg());
+    }
+
+    @PutMapping("/changeProduct/{product}/{characteristic}")
+    public void changeCharacteristicOfProduct(@PathVariable Product product,
+                                              @PathVariable Characteristic characteristic,
+                                              @RequestParam String value){
+        productEditingService.changeCharacteristicOfProduct(product, characteristic, value);
+    }
+
+    @DeleteMapping("/deleteProduct/{product}")
+    public void deleteProduct(@PathVariable Product product){
+        productEditingService.deleteProduct(product);
     }
 }
