@@ -1,6 +1,7 @@
 package storeLab.product_service.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Characteristic {
@@ -10,6 +11,9 @@ public class Characteristic {
 
     private String name;
     private String description;
+
+    /*@OneToMany (mappedBy="characteristics", fetch=FetchType.EAGER)
+    private List<ProductCharacteristic> productCharacteristics;*/
 
 
     public Characteristic() {
@@ -43,4 +47,12 @@ public class Characteristic {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    /*public List<ProductCharacteristic> getProductCharacteristics() {
+        return productCharacteristics;
+    }
+
+    public void setProductCharacteristics(List<ProductCharacteristic> productCharacteristics) {
+        this.productCharacteristics = productCharacteristics;
+    }*/
 }

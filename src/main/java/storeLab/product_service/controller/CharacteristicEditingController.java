@@ -21,8 +21,8 @@ public class CharacteristicEditingController {
     }
 
     @PostMapping("/addCharacteristic")
-    public void addCharacteristic(@RequestParam String name, @RequestParam String description){
-        charEditServ.addCharacteristic(name,description);
+    public void addCharacteristic(@RequestBody Characteristic characteristic){
+        charEditServ.addCharacteristic(characteristic.getName(), characteristic.getDescription());
     }
 
     @GetMapping("/getCharacteristics/{characteristic}")
@@ -30,17 +30,13 @@ public class CharacteristicEditingController {
         return characteristic;
     }
 
-    @PutMapping("/characteristicEdit/{characteristic}")
-    public void changeCharacteristic(@RequestParam String name,
-                                       @RequestParam String description,
-                                       @PathVariable Characteristic characteristic){
-        charEditServ.changeCharacteristic(characteristic.getId(),name,description);
+    @PutMapping("/characteristicEdit")
+    public void changeCharacteristic(@RequestBody Characteristic characteristic){
+        charEditServ.changeCharacteristic(characteristic.getId(),characteristic.getName(),characteristic.getDescription());
     }
 
     @DeleteMapping("/deleteCharacteristic/{characteristic}")
     public void deleteCharacteristic(@PathVariable Characteristic characteristic){
         charEditServ.deleteCharacteristic(characteristic.getId());
     }
-
-
 }

@@ -1,6 +1,7 @@
 package storeLab.product_service.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -12,6 +13,9 @@ public class Product {
     private float price;
     private String discount;
     private String img;
+
+    @OneToMany(mappedBy = "product", fetch=FetchType.EAGER)
+    private List<ProductCharacteristic> productCharacteristics;
 
 
     public Product() {

@@ -38,14 +38,13 @@ public class ProductEditingController {
         productEditingService.addProduct(product.getName(), product.getPrice(), product.getDiscount(), product.getImg());
     }
 
-    @PostMapping("/addProduct/{characteristic}")
-    public void addCharacteristic(@RequestParam String value,
-                                  @PathVariable Characteristic characteristic,
-                                  @RequestParam Product product){
-        productEditingService.addCharacteristic(product, characteristic, value);
+    @PostMapping("/addProduct/addCharacteristic")
+    public void addCharacteristic(@RequestBody ProductCharacteristic productCharacteristic){
+        productEditingService.addCharacteristic(productCharacteristic.getProduct(), productCharacteristic.getCharacteristics(),
+                productCharacteristic.getValue());
     }
 
-    @PostMapping("/changeProduct")
+    @PutMapping("/changeProduct")
     public void changeProduct(@RequestBody Product product){
         productEditingService.changeProduct(product.getId(), product.getName(), product.getPrice(), product.getDiscount(),
                 product.getImg());
