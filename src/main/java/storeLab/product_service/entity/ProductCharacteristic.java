@@ -13,7 +13,7 @@ public class ProductCharacteristic {
     @JoinColumn(name="product_id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="characteristics_id")
     private Characteristic characteristics;
 

@@ -1,6 +1,7 @@
 package storeLab.product_service.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import storeLab.product_service.entity.Characteristic;
 import storeLab.product_service.entity.Product;
 import storeLab.product_service.entity.ProductCharacteristic;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class ProductEditingService {
     private final ProductRepository productRepository;
 
@@ -59,15 +61,15 @@ public class ProductEditingService {
         productRepository.save(p);
     }
 
-    public void changeCharacteristicOfProduct(Product product, Characteristic characteristic, String value){
-        ProductCharacteristic pc = productCharacteristicRepository.findByProductAndCharacteristics(product, characteristic);
-        pc.setValue(value);
-        productCharacteristicRepository.save(pc);
+    public void changeCharacteristicsOfProduct(ProductCharacteristic[] productCharacteristics){
+        for(ProductCharacteristic pc : productCharacteristics){
+            productCharacteristicRepository.save(pc);
+        }
     }
 
-    public void deleteProduct(Product product){
-        productRepository.deleteById(product.getId());
-        productCharacteristicRepository.deleteByProduct(product);
+    public void deleteProduct(Integer id){
+        productCharacteristicRepository.deleteByProduct(productRepository.findById(id).orElse(null));
+        //productRepository.deleteById(id);
     }
 
 }

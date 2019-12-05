@@ -50,15 +50,13 @@ public class ProductEditingController {
                 product.getImg());
     }
 
-    @PutMapping("/changeProduct/{product}/{characteristic}")
-    public void changeCharacteristicOfProduct(@PathVariable Product product,
-                                              @PathVariable Characteristic characteristic,
-                                              @RequestParam String value){
-        productEditingService.changeCharacteristicOfProduct(product, characteristic, value);
+    @PutMapping("/changeCharacteristicsOfProduct")
+    public void changeCharacteristicsOfProduct(@RequestBody ProductCharacteristic[] productCharacteristics){
+        productEditingService.changeCharacteristicsOfProduct(productCharacteristics);
     }
 
     @DeleteMapping("/deleteProduct/{product}")
     public void deleteProduct(@PathVariable Product product){
-        productEditingService.deleteProduct(product);
+        productEditingService.deleteProduct(product.getId());
     }
 }
