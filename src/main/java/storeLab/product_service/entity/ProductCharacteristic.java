@@ -17,6 +17,7 @@ public class ProductCharacteristic {
     @JoinColumn(name="characteristics_id")
     private Characteristic characteristics;
 
+
     private String value;
 
     public ProductCharacteristic(Product product, Characteristic characteristics, String value) {

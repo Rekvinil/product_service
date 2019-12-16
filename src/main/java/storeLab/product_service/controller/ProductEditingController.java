@@ -1,12 +1,15 @@
 package storeLab.product_service.controller;
 
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import storeLab.product_service.entity.Characteristic;
 import storeLab.product_service.entity.Product;
 import storeLab.product_service.entity.ProductCharacteristic;
 import storeLab.product_service.service.ProductEditingService;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/productEditing")
@@ -31,6 +34,11 @@ public class ProductEditingController {
     @GetMapping("/getCharacteristicsOfProduct/{product}")
     public List<ProductCharacteristic> getCharacteristicsOfProduct(@PathVariable Product product){
         return productEditingService.getCharacteristicsOfProduct(product);
+    }
+
+    @GetMapping("/getProductsByCharacteristics")
+    public List<Product> getProductsByCharacteristics(@RequestParam MultiValueMap<String, String> params){
+        return productEditingService.getProductsByCharacteristics(params);
     }
 
     @PostMapping("/addProduct")
