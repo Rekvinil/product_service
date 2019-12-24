@@ -43,7 +43,7 @@ public class ProductEditingController {
 
     @PostMapping("/addProduct")
     public void addProduct(@RequestBody Product product){
-        productEditingService.addProduct(product.getName(), product.getPrice(), product.getDiscount(), product.getImg());
+        productEditingService.addProduct(product.getName(), product.getPrice(), product.getDiscount(), product.getImg(), product.getCount());
     }
 
     @PostMapping("/addProduct/addCharacteristic")
@@ -55,7 +55,7 @@ public class ProductEditingController {
     @PutMapping("/changeProduct")
     public void changeProduct(@RequestBody Product product){
         productEditingService.changeProduct(product.getId(), product.getName(), product.getPrice(), product.getDiscount(),
-                product.getImg());
+                product.getImg(), product.getCount());
     }
 
     @PutMapping("/changeCharacteristicsOfProduct")

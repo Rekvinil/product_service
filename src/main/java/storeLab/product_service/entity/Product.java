@@ -13,6 +13,7 @@ public class Product {
     private float price;
     private String discount;
     private String img;
+    private int count;
 
     @OneToMany(mappedBy = "product", fetch=FetchType.EAGER)
     private List<ProductCharacteristic> productCharacteristics;
@@ -21,11 +22,12 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, float price, String discount, String img) {
+    public Product(String name, float price, String discount, String img, int count) {
         this.name = name;
         this.price = price;
         this.discount = discount;
         this.img = img;
+        this.count = count;
     }
 
     public String getImg() {
@@ -68,4 +70,11 @@ public class Product {
         this.discount = discount;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }

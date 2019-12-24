@@ -23,13 +23,11 @@ public class ProductEditingService {
 
     private final ProductCharacteristicRepository productCharacteristicRepository;
 
-    private final CharacteristicRepository characteristicRepository;
 
 
-    public ProductEditingService(ProductRepository productRepository, ProductCharacteristicRepository productCharacteristicRepository, CharacteristicRepository characteristicRepository) {
+    public ProductEditingService(ProductRepository productRepository, ProductCharacteristicRepository productCharacteristicRepository) {
         this.productRepository = productRepository;
         this.productCharacteristicRepository = productCharacteristicRepository;
-        this.characteristicRepository = characteristicRepository;
     }
 
     public List<Product> getAllProducts(){
@@ -52,11 +50,11 @@ public class ProductEditingService {
         productCharacteristicRepository.save(new ProductCharacteristic(pr,ch,value));
     }
 
-    public void addProduct(String name, float price, String discount, String img){
-        productRepository.save(new Product(name, price, discount, img));
+    public void addProduct(String name, float price, String discount, String img, int count){
+        productRepository.save(new Product(name, price, discount, img, count));
     }
 
-    public void changeProduct(Integer id, String name, float price, String discount, String img){
+    public void changeProduct(Integer id, String name, float price, String discount, String img, int count){
         Product p = productRepository.findById(id).orElse(null);
         if(p==null){
             return;
@@ -65,6 +63,7 @@ public class ProductEditingService {
         p.setPrice(price);
         p.setDiscount(discount);
         p.setImg(img);
+        p.setCount(count);
         productRepository.save(p);
     }
 
